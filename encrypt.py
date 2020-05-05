@@ -49,6 +49,7 @@ def scytale(in_string: str, block: int) -> str:
         str
             The Scytale encoded message.
     """
+    in_string += " " * ((block - len(in_string) % block) % block)
     blocking = [[letter for letter in in_string[start_idx::block]] for start_idx in range(block)]
     return ''.join(itertools.chain.from_iterable(blocking))
 
@@ -97,15 +98,15 @@ if __name__ == "__main__":
 
     scytale_write_flag = "w" if os.path.isfile("encrypted_scytale.txt") else "x"
     with open("source_scytale.txt", "r") as source_scytale:
-        with open("encrypted_scytale.txt", scytale_write_flag) as encoded_scytale:
+        with open("encrypted_scytale.txt", scytale_write_flag, encoding="utf8") as encoded_scytale:
             encoded_scytale.write(scytale(source_scytale.read(), 13))
 
     caesar_write_flag = "w" if os.path.isfile("encrypted_caesar.txt") else "x"
     with open("source_caesar.txt", "r") as source_caesar:
-        with open("encrypted_caesar.txt", caesar_write_flag) as encoded_caesar:
+        with open("encrypted_caesar.txt", caesar_write_flag, encoding="utf8") as encoded_caesar:
             encoded_caesar.write(caesar(source_caesar.read(), "H"))
 
     vigenere_write_flag = "w" if os.path.isfile("encrypted_vigenere.txt") else "x"
     with open("source_vigenere.txt", "r") as source_vigenere:
-        with open("encrypted_vigenere.txt", vigenere_write_flag) as encoded_vigenere:
+        with open("encrypted_vigenere.txt", vigenere_write_flag, encoding="utf8") as encoded_vigenere:
             encoded_vigenere.write(vigenere(source_vigenere.read(), "AveCaesar"))
